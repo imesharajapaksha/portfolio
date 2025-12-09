@@ -1,14 +1,30 @@
 // Data arrays simulating a database
-const skillsData = [
-    { name: "HTML", level: 95 },
-    { name: "CSS", level: 90 },
-    { name: "JavaScript", level: 85 },
-    { name: "React", level: 80 },
-    { name: "Node.js", level: 75 },
-    { name: "Python", level: 70 },
-    { name: "SQL", level: 65 },
-    { name: "Git", level: 85 }
+const skills = [
+    { name: 'HTML', level: 95 },
+    { name: 'CSS', level: 90 },
+    { name: 'JavaScript', level: 85 },
+    { name: 'OOP', level: 80 },
+    { name: 'Python', level: 88 },
+    { name: 'Java', level: 82 },
+    { name: 'C', level: 75 },
+    { name: 'C++', level: 75 },
+    { name: 'SQL', level: 85 },
+    { name: 'Git', level: 80 }
 ];
+
+function renderSkills() {
+    const skillsContainer = document.getElementById('skills-container');
+    skillsContainer.innerHTML = skills.map(skill => `
+        <div class="skill-card">
+            <h3>${skill.name}</h3>
+            <div class="skill-level">
+                <div class="skill-fill" style="width: ${skill.level}%"></div>
+            </div>
+        </div>
+    `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', renderSkills);
 
 const projectsData = [
     {
