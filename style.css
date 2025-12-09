@@ -210,9 +210,63 @@ section {
 
 .about p {
     color: var(--text-color);
-    text-align: center;
     line-height: 1.8;
     font-size: 1.1rem;
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    margin-top: 2rem;
+}
+
+.about-text {
+    flex: 1;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    text-align: left;
+}
+
+.about-image {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.about-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--liquid-shadow);
+    border: 2px solid var(--glass-border);
+    transition: transform 0.3s;
+}
+
+.about-photo:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .about-image {
+        order: -1;
+    }
+
+    .about-photo {
+        width: 150px;
+        height: 150px;
+    }
+
+    .about-text {
+        text-align: center;
+    }
 }
 
 .skills-grid {
