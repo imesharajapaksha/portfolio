@@ -79,7 +79,7 @@ nav {
 
 section {
     padding: 5rem 2rem;
-    min-height: 100vh;
+    min-height: auto;
     display: flex;
     align-items: center;
 }
@@ -91,6 +91,7 @@ section {
 }
 
 .hero {
+    min-height: 100vh;
     background: linear-gradient(135deg, rgba(255, 0, 128, 0.15), rgba(139, 0, 139, 0.15));
     color: var(--text-color);
     text-align: center;
