@@ -1,21 +1,49 @@
-// Skills Data
-const skills = [
-    { name: 'HTML', level: 95 },
-    { name: 'CSS', level: 90 },
-    { name: 'JavaScript', level: 85 },
-    { name: 'OOP', level: 80 },
-    { name: 'Python', level: 88 },
-    { name: 'Java', level: 82 },
-    { name: 'C', level: 75 },
-    { name: 'C++', level: 75 },
-    { name: 'SQL', level: 85 },
-    { name: 'Git', level: 80 }
+// Data arrays simulating a database
+const skillsData = [
+    { name: "HTML", level: 95 },
+    { name: "CSS", level: 90 },
+    { name: "JavaScript", level: 85 },
+    { name: "OOP", level: 80 },
+    { name: "C++", level: 75 },
+    { name: "Python", level: 70 },
+    { name: "SQL", level: 65 },
+    { name: "Git", level: 85 }
 ];
 
-// Render Skills
+const projectsData = [
+    {
+        title: "Fingerprint-Based Smart Lock System",
+        description: "A collaborative IoT hardware project designed to enhance security functions. Developed a fingerprint-based smart lock system integrated with Bluetooth alert notifications to improve safety and user accessibility.",
+        link: "project/hardware.pdf"
+    },
+    {
+        title: "Quick Cars - Car Rental System",
+        description: "A web-based car rental system built for customers and vehicle owners to easily rent and manage cars. Group project developed using HTML, CSS, Java, and PHP for the Web Development module.",
+        link: "https://github.com/sahanrd/QuickCarz.git"
+    },
+    {
+        title: "Cypher 3.0 - Inter-University Hackathon",
+        description: "Contributed as Co-Chair of Cypher 3.0, an inter-university hackathon and coding competition organized by WIE, KDU. Played a key role in organizing and executing this major successful event.",
+        link: "https://www.linkedin.com/posts/kdu-wie_ieee-ieeewie-wiekdu-activity-7387467032574881792-hqZ7?utm_medium=ios_app&rcm=ACoAAFS-Tb4BvqzsHbEBYBXapPXEtak3TlBmrpI&utm_source=social_share_send&utm_campaign=whatsapp"
+    },
+    {
+        title: "Individual Portfolio Website",
+        description: "A modern, responsive personal portfolio website showcasing skills, projects, and professional highlights. Built with HTML, CSS, and JavaScript featuring liquid glass design aesthetics.",
+        link: "#"
+    }
+];
+
+// CV Data (simulating backend storage)
+const cvData = {
+    fileName: "imesha_cv.pdf",
+    fileUrl: "cv/imesha_cv.pdf", // Path to CV file
+    lastUpdated: "2025-12-10"
+};
+
+// Function to render skills
 function renderSkills() {
     const container = document.getElementById('skills-container');
-    container.innerHTML = skills.map(skill => `
+    container.innerHTML = skillsData.map(skill => `
         <div class="skill-card">
             <h3>${skill.name}</h3>
             <div class="skill-level">
@@ -25,31 +53,7 @@ function renderSkills() {
     `).join('');
 }
 
-// Projects Data
-const projectsData = [
-    {
-        title: "E-Commerce Platform",
-        description: "A full-stack e-commerce website built with React and Node.js.",
-        link: "https://github.com/imesha/ecommerce-platform"
-    },
-    {
-        title: "Task Management App",
-        description: "A responsive task app using JavaScript and local storage.",
-        link: "https://github.com/imesha/task-manager"
-    },
-    {
-        title: "Weather Dashboard",
-        description: "A dashboard using weather API and interactive UI.",
-        link: "https://github.com/imesha/weather-dashboard"
-    },
-    {
-        title: "Portfolio Website",
-        description: "My personal portfolio website.",
-        link: "#"
-    }
-];
-
-// Render Projects
+// Function to render projects
 function renderProjects() {
     const container = document.getElementById('projects-container');
     container.innerHTML = projectsData.map(project => `
@@ -61,47 +65,82 @@ function renderProjects() {
     `).join('');
 }
 
-// CV Data
-const cvData = {
-    fileName: "Imesha_CV.pdf",
-    fileUrl: "cv/Imesha_CV.pdf",
-    lastUpdated: "2025-11-21"
-};
-
-// Handle CV Download
-function handleCVDownload() {
-    const downloadBtn = document.getElementById('download-cv-btn');
-
-    downloadBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        const link = document.createElement('a');
-        link.href = cvData.fileUrl;
-        link.download = cvData.fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    });
-}
-
-// Handle Contact Form
+// Function to handle contact form submission
 function handleContactForm() {
     const form = document.getElementById('contact-form');
+    if (!form) return;
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         const formData = new FormData(this);
         const data = Object.fromEntries(formData);
 
-        console.log("Contact form submitted:", data);
-        alert("Thank you for your message! I'll get back to you soon.");
+        const payload = {
+            name: data.name,
+            email: data.email,
+            message: data.message,
+            _subject: `Portfolio Contact: Message from ${data.name}`,
+            _template: "table",
+            _captcha: "false"
+        };
 
-        this.reset();
+        try {
+            const response = await fetch("https://formsubmit.co/ajax/imeshaaa2004@gmail.com", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                alert("Your message has been sent successfully! I will get back to you soon.");
+                this.reset();
+            } else {
+                alert("Failed to send your message. Please try again.");
+            }
+        } catch (error) {
+            alert("Something went wrong! Please try again or email me directly: imeshaaa2004@gmail.com");
+            console.error(error);
+        }
     });
 }
 
-// Initialize Everything
+
+// Function to handle CV download
+function handleCVDownload() {
+    const downloadBtn = document.getElementById('download-cv-btn');
+    downloadBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Simulate backend retrieval by logging to console
+        console.log('CV Download requested:', {
+            fileName: cvData.fileName,
+            fileUrl: cvData.fileUrl,
+            timestamp: new Date().toISOString()
+        });
+        
+        // Check if CV file exists, otherwise show alert
+        // In a real scenario, this would fetch from the server
+        const cvExists = true; // Set to true when you add the actual CV file
+        
+        if (cvExists) {
+            // Create a temporary link and trigger download
+            const link = document.createElement('a');
+            link.href = cvData.fileUrl;
+            link.download = cvData.fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            alert('CV file will be available soon. Please add your CV file to the "cv" folder and name it "Imesha_CV.pdf"');
+        }
+    });
+}
+
+// Initialize the application
 function init() {
     renderSkills();
     renderProjects();
@@ -109,5 +148,11 @@ function init() {
     handleCVDownload();
 }
 
-document.addEventListener("DOMContentLoaded", init);
+// Run initialization when DOM is loaded
+document.addEventListener('DOMContentLoaded', init);
 
+document.addEventListener("DOMContentLoaded", () => {
+    loadSkills();
+    loadProjects();
+    handleContactForm();  // <--- THIS MUST BE HERE
+});
