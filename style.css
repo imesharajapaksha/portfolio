@@ -50,17 +50,40 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
+    gap: 2rem;
 }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
+nav .logo {
+    flex: 1;
+}
+
+.nav-social {
+    flex: 1;
+    justify-content: center;
 }
 
 .nav-links {
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.nav-social {
     display: flex;
-    list-style: none;
+    gap: 1.2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-social .icon {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.nav-social .icon:hover {
+    color: var(--primary-color);
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 8px var(--primary-color));
 }
 
 .nav-links li {
@@ -249,6 +272,25 @@ section {
 .about-photo:hover {
     transform: scale(1.05);
 }
+
+
+@media(max-width: 768px) {
+
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-social {
+        order: 2;
+    }
+
+    .nav-links {
+        order: 3;
+        margin-top: 0.5rem;
+    }
+}
+
 
 @media (max-width: 768px) {
     .about-content {
